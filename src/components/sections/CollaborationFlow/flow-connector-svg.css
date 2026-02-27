@@ -1,0 +1,56 @@
+@keyframes dash {
+  from {
+    stroke-dashoffset: 1000;
+  }
+  to {
+    stroke-dashoffset: 0;
+  }
+}
+
+@keyframes fill-animation-yellow {
+  from {
+    fill: #ffffff;
+  }
+  to {
+    fill: #f1b434;
+  }
+}
+
+@keyframes fill-animation-black {
+  from {
+    fill: #ffffff;
+  }
+  to {
+    fill: #000000;
+  }
+}
+
+.flow-connector-circle-first {
+  fill: #ffffff;
+}
+.flow-connector-circle-final {
+  fill: #ffffff;
+}
+
+.flow-connector-circle-first--animated {
+  animation: fill-animation-yellow 0.5s ease-in-out forwards;
+}
+
+.flow-connector-circle-final--animated {
+  animation: fill-animation-black 0.5s 0.8s ease-in-out forwards;
+}
+
+.flow-connector-dashed {
+  stroke: white;
+  stroke-dasharray: 5;
+}
+
+.flow-connector-path {
+  stroke-dasharray: 1000;
+  stroke-dashoffset: 1000;
+  stroke: #000000;
+}
+
+.flow-connector-path--animated {
+  animation: dash 1s 0.5s ease-in-out forwards;
+}

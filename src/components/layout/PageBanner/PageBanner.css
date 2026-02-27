@@ -1,0 +1,120 @@
+@keyframes moveBannerTextAnimationTop {
+  0% {
+    transform: translateY(100%);
+  }
+  50% {
+    transform: translateY(-10%);
+  }
+  100% {
+    transform: translateY(13px);
+  }
+}
+
+@keyframes moveBannerTextAnimationTopDesktop {
+  0% {
+    transform: translateY(100%);
+  }
+  50% {
+    transform: translateY(-10%);
+  }
+  100% {
+    transform: translateY(25px);
+  }
+}
+
+.moveBannerTextTop {
+  transform: translateY(100%);
+  animation: moveBannerTextAnimationTop 0.7s 0.5s forwards ease;
+}
+
+@media (min-width: 1024px) {
+  .moveBannerTextTop {
+    animation: moveBannerTextAnimationTopDesktop 0.7s 0.5s forwards ease;
+  }
+}
+
+@keyframes moveBannerTextAnimationBottom {
+  0% {
+    transform: translateY(-100%);
+  }
+  50% {
+    transform: translateY(10%);
+  }
+  100% {
+    transform: translateY(-13px);
+  }
+}
+
+@keyframes moveBannerTextAnimationBottomDesktop {
+  0% {
+    transform: translateY(-100%);
+  }
+  50% {
+    transform: translateY(10%);
+  }
+  100% {
+    transform: translateY(-25px);
+  }
+}
+
+.moveBannerTextBottom {
+  transform: translateY(-100%);
+  animation: moveBannerTextAnimationBottom 0.7s 0.5s forwards ease;
+}
+
+@media (min-width: 1024px) {
+  .moveBannerTextBottom {
+    animation: moveBannerTextAnimationBottomDesktop 0.7s 0.5s forwards ease;
+  }
+}
+
+@keyframes moveBannerOverfolowAnimation {
+  0% {
+    overflow: hidden;
+  }
+  50% {
+    overflow: hidden;
+  }
+
+  60% {
+    overflow: visible;
+  }
+  100% {
+    overflow: visible;
+  }
+}
+
+.overflowHandle {
+  animation: moveBannerOverfolowAnimation 0.7s 0.5s forwards ease;
+}
+
+@keyframes scaleDividerAnimation {
+  0% {
+    transform: scaleX(0) translateY(-50%);
+  }
+  50% {
+    transform: scaleX(1) translateY(-50%);
+  }
+  100% {
+    transform: scaleX(0) translateY(-50%);
+  }
+}
+
+.scaleDivider {
+  transform: scaleX(0) translateY(-50%);
+  animation: scaleDividerAnimation 1s 0.2s ease;
+}
+
+@keyframes fadeInAnimation {
+  0% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+  }
+}
+
+.fadeIn {
+  opacity: 0;
+  animation: fadeInAnimation 0.5s 1s forwards ease;
+}

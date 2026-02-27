@@ -1,0 +1,31 @@
+{
+  "name": "light-detail",
+  "type": "module",
+  "scripts": {
+    "dev": "vinxi dev",
+    "build": "vinxi build",
+    "start": "node ./.output/server/index.mjs"
+  },
+  "dependencies": {
+    "@googlemaps/js-api-loader": "^1.16.2",
+    "@solidjs/meta": "^0.29.4",
+    "@solidjs/router": "^0.15.0",
+    "@solidjs/start": "^1.1.0",
+    "autoprefixer": "^10.4.14",
+    "axios": "^1.6.3",
+    "clsx": "^2.0.0",
+    "postcss": "^8.4.26",
+    "resend": "^6.0.1",
+    "solid-icons": "^1.1.0",
+    "solid-js": "^1.9.5",
+    "solid-transition-group": "^0.2.3",
+    "tailwindcss": "^3.3.3",
+    "vinxi": "^0.5.7"
+  },
+  "engines": {
+    "node": ">=20"
+  },
+  "devDependencies": {
+    "@types/google.maps": "^3.55.2"
+  }
+}
