@@ -6,18 +6,24 @@ import { Resend } from "resend";
 // Add a lightweight accessor mainly to enable an inline warning.
 const env = (key: string): string | undefined => process.env[key];
 
-const resendApiKey = env("RESEND_API_KEY");
-if (!resendApiKey) {
-  console.warn(
-    "[sendEmail] Missing RESEND_API_KEY env variable – emails will fail."
-  );
+let resend: Resend | undefined;
+function getResend() {
+  if (!resend) {
+    const resendApiKey = env("RESEND_API_KEY");
+    if (!resendApiKey) {
+      console.warn(
+        "[sendEmail] Missing RESEND_API_KEY env variable – emails will fail.",
+      );
+    }
+    resend = new Resend(resendApiKey);
+  }
+  return resend;
 }
-const resend = new Resend(resendApiKey);
 
 import { SendEmailParams, SendEmailResponse } from "./types";
 
 export const sendEmail = async (
-  payload: SendEmailParams
+  payload: SendEmailParams,
 ): Promise<SendEmailResponse> => {
   console.log(payload);
   // Basic HTML escape to avoid injection in the email body.
@@ -62,27 +68,27 @@ export const sendEmail = async (
               <tr>
                 <td style="font-weight:600;padding:4px 8px;width:120px;background:#fafafa;border:1px solid #eee">Name</td>
                 <td style="padding:4px 8px;border:1px solid #eee">${escape(
-                  name
+                  name,
                 )}</td>
               </tr>
               <tr>
                 <td style="font-weight:600;padding:4px 8px;background:#fafafa;border:1px solid #eee">Email</td>
                 <td style="padding:4px 8px;border:1px solid #eee"><a href="mailto:${escape(
-                  email
+                  email,
                 )}" style="color:#0a58ca;text-decoration:none">${escape(
-    email
-  )}</a></td>
+                  email,
+                )}</a></td>
               </tr>
               <tr>
                 <td style="font-weight:600;padding:4px 8px;background:#fafafa;border:1px solid #eee">Subject</td>
                 <td style="padding:4px 8px;border:1px solid #eee">${escape(
-                  subject
+                  subject,
                 )}</td>
               </tr>
               <tr>
                 <td style="font-weight:600;padding:4px 8px;background:#fafafa;border:1px solid #eee;vertical-align:top">Message</td>
                 <td style="padding:8px;border:1px solid #eee;white-space:pre-wrap;font-family:inherit">${escape(
-                  content
+                  content,
                 )}</td>
               </tr>
               <tr>
@@ -133,13 +139,13 @@ export const sendEmail = async (
               <tr>
                 <td style="padding:6px 10px;font-weight:600;background:#fafafa;border:1px solid #eee;width:120px">Subject</td>
                 <td style="padding:6px 10px;border:1px solid #eee">${escape(
-                  subject
+                  subject,
                 )}</td>
               </tr>
               <tr>
                 <td style="padding:6px 10px;font-weight:600;background:#fafafa;border:1px solid #eee;vertical-align:top">Message</td>
                 <td style="padding:10px;border:1px solid #eee;white-space:pre-wrap">${escape(
-                  content
+                  content,
                 )}</td>
               </tr>
               <tr>
@@ -185,8 +191,8 @@ export const sendEmail = async (
           };border-top:1px solid #f1f1f1">
             Warm regards,<br/>
             The <strong style="color:${BRAND.dark}">${
-    BRAND.name
-  }</strong> Team<br/><br/>
+              BRAND.name
+            }</strong> Team<br/><br/>
             <span style="font-size:11px;color:#999">If you didn't submit this form, you can ignore this email.</span>
           </td>
         </tr>
@@ -204,7 +210,7 @@ export const sendEmail = async (
     // Send internal and user confirmation (if user email provided & looks valid)
     const tasks: Promise<any>[] = [];
     tasks.push(
-      resend.emails.send({
+      getResend().emails.send({
         from: `${BRAND.name} Website <notification@contact.lightdetail.eu>`,
         to: internalRecipients,
         subject: subject?.trim()
@@ -212,20 +218,20 @@ export const sendEmail = async (
           : "New Message from Contact Form",
         html,
         text: `New contact form submission\nName: ${name}\nEmail: ${email}\nSubject: ${subject}\nMessage:\n${content}\nReceived: ${receivedAt}`,
-      })
+      }),
     );
 
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
     if (email && emailRegex.test(email)) {
       tasks.push(
-        resend.emails.send({
+        getResend().emails.send({
           from: `${BRAND.name} <no-reply@contact.lightdetail.eu>`,
           // send a confirmation to the user
           to: email,
           subject: `${BRAND.name} – We've received your message`,
           html: userHtml,
           text: userText,
-        })
+        }),
       );
     }
 
