@@ -12,7 +12,10 @@ export const route = {
 };
 
 export default function About() {
-  const data = createAsync(getStaff, { deferStream: true });
+  const data = createAsync(() => getStaff(), {
+    deferStream: true,
+  });
+
   const [divRef1, setDivRef1] = createSignal<HTMLDivElement | null>(null);
   const [divRef2, setDivRef2] = createSignal<HTMLDivElement | null>(null);
 

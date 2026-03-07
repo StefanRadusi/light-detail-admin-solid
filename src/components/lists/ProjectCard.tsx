@@ -1,4 +1,5 @@
 import { A } from "@solidjs/router";
+import { getImageUrl } from "~/utils/image";
 
 type Props = {
   title?: string;
@@ -13,7 +14,9 @@ export const ProjectCard = (props: Props) => {
       <div class="w-full h-[600px] flex relative shadow-md">
         <img
           class="w-full h-full object-cover absolute top-0 left-0"
-          src={props.coverImageUrl}
+          src={
+            props.coverImageUrl ? getImageUrl(props.coverImageUrl) : undefined
+          }
           alt={props.title}
         />
         <div class="flex-1 h-full z-10 overflow-hidden group relative">

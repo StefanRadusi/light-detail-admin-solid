@@ -4,20 +4,20 @@ import { PageBanner } from "~/components/layout/PageBanner/PageBanner";
 import { Section } from "~/components/layout/Section";
 import { SectionHeader } from "~/components/layout/Section/SectionHeader";
 import { Project } from "~/types";
+import { getImageUrl } from "~/utils/image";
 
 type Props = {
   project: Project;
 };
 
 export const ProjectPage = (props: Props) => {
-  const getBannerTitle = () =>
-    `${props.project.title.toLocaleUpperCase()}|PROJECT`;
+  const getBannerTitle = () => `${props.project.title.toUpperCase()}|PROJECT`;
 
   return (
     <main class="w-full flex flex-col relative">
       <PageBanner
         id={props.project.id}
-        img={props.project.coverImageUrl}
+        img={getImageUrl(props.project.coverImageUrl)}
         title={getBannerTitle()}
         subTitle={""}
       />
@@ -34,9 +34,9 @@ export const ProjectPage = (props: Props) => {
             {(img) => (
               <div class="flex-1 overflow-hidden aspect-square min-w-full lg:min-w-[40%] shadow-md">
                 <img
-                  onClick={() => setPreviewImg(img)}
+                  onClick={() => setPreviewImg(getImageUrl(img))}
                   class="w-full h-full object-cover cursor-pointer"
-                  src={img}
+                  src={getImageUrl(img)}
                   alt={`${props.project.title} - interior design photo`}
                 />
               </div>

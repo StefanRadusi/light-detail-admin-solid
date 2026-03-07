@@ -1,11 +1,12 @@
-import { cache } from "@solidjs/router";
+import { query } from "@solidjs/router";
 import { server } from "./server";
 import { Project } from "~/types";
 
-export const getLatestProjects = cache(async () => {
+export const getLatestProjects = query(async () => {
+  "use server";
   try {
     const response = await server.get<{ projects?: Project[] }>(
-      "/projects/latest"
+      "/projects/latest",
     );
 
     if (response.data?.projects) return response.data.projects as Project[];
@@ -16,13 +17,12 @@ export const getLatestProjects = cache(async () => {
   return [];
 }, "latestProjects");
 
-export const getAllProjects = cache(async () => {
+export const getAllProjects = query(async () => {
+  "use server";
   try {
-    const response = await server.get<{ projects?: Project[] }>(
-      "/projects/all"
-    );
+    const response = await server.get<Project[]>("/projects");
 
-    if (response.data?.projects) return response.data.projects;
+    if (response.data) return response.data;
   } catch (error) {
     console.error(error);
   }
@@ -30,13 +30,12 @@ export const getAllProjects = cache(async () => {
   return [];
 }, "allProjects");
 
-export const getProjectsByType = cache(async (type: string) => {
+export const getProjectsByType = query(async (type: string) => {
+  "use server";
   try {
-    const response = await server.get<{ projects?: Project[] }>(
-      `/projects/${type}`
-    );
+    const response = await server.get<Project[]>(`/projects/type/${type}`);
 
-    if (response.data?.projects) return response.data.projects;
+    if (response.data) return response.data;
   } catch (error) {
     console.error(error);
   }
@@ -44,14 +43,16 @@ export const getProjectsByType = cache(async (type: string) => {
   return [];
 }, "projectsByType");
 
-export const getProjectsById = cache(async (id: string) => {
+export const getProjectsById = query(async (id: string) => {
+  "use server";
   try {
-    const response = await server.get<{ project?: any }>(`/project/${id}`);
+    const response = await server.get<Project>(`/projects/${id}`);
+    console.log(response.data);
 
-    if (response.data?.project)
+    if (response.data)
       return {
-        ...response.data.project,
-        id: response.data.project.pk,
+        ...response.data,
+        id: response.data.id,
       } as Project;
   } catch (error) {
     console.error(error);

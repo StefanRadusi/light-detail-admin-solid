@@ -1,14 +1,13 @@
 import { StaffMember } from "~/types";
 import { server } from "./server";
-import { cache } from "@solidjs/router";
+import { query } from "@solidjs/router";
 
-export const getStaff = cache(async () => {
+export const getStaff = query(async () => {
+  "use server";
   try {
-    const response = await server.get<{ staffMembers?: StaffMember[] }>(
-      "/staff"
-    );
+    const response = await server.get<StaffMember[]>("/staff");
 
-    if (response.data?.staffMembers) return response.data.staffMembers;
+    if (response.data) return response.data;
   } catch (error) {
     console.error(error);
   }

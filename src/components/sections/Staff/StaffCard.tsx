@@ -1,3 +1,5 @@
+import { getImageUrl } from "~/utils/image";
+
 type Props = {
   coverImageUrl: string;
   name: string;
@@ -13,7 +15,10 @@ export const StaffCard = (props: Props) => {
           {props.name}
         </h3>
         <div class="h-[300px] shadow-md overflow-hidden lg:h-auto">
-          <img src={props.coverImageUrl} alt={`${props.name} - Light Detail Studio`} />
+          <img
+            src={getImageUrl(props.coverImageUrl)}
+            alt={`${props.name} - Light Detail Studio`}
+          />
         </div>
       </div>
       <div class="flex flex-col gap-2 flex-1 ">

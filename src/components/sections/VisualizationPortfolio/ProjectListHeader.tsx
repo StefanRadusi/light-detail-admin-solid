@@ -22,7 +22,7 @@ export const ProjectListHeader = (props: Props) => {
     <div
       class={clsx(
         "top-0 left-0 flex w-full px-6 lg:px-60 z-20 bg-gradient-to-b from-20% from-white ",
-        position()
+        position(),
       )}
     >
       <div class="h-24 flex m-auto flex-1 max-w-6xl  relative overflow-hidden">
@@ -31,7 +31,7 @@ export const ProjectListHeader = (props: Props) => {
             "absolute top-0 left-0 w-1/2 h-full overflow-hidden transition-transform duration-300",
             isSelected(ProjectType.COMMERCIAL)
               ? "translate-x-0"
-              : "translate-x-full"
+              : "translate-x-full",
           )}
         >
           <div class="bg-gray-200 absolute bottom-0 left-1/2 w-full pt-[100%] -translate-x-1/2 rounded-full" />
@@ -40,11 +40,11 @@ export const ProjectListHeader = (props: Props) => {
           <button
             class={clsx(
               "w-1/2 z-10 transition-colors duration-300 font-bold",
-              textColor(tab)
+              textColor(tab),
             )}
             onClick={() => props.setType(tab)}
           >
-            {tab.toLocaleUpperCase()}
+            {tab.toUpperCase()}
           </button>
         ))}
       </div>

@@ -1,5 +1,5 @@
 import { createAsync } from "@solidjs/router";
-import { Show } from "solid-js";
+import { Show, Suspense } from "solid-js";
 import { Page } from "~/components/layout/Page";
 import { InteriorDesignPortfolio } from "~/components/sections/InteriorDesignPortfolio";
 import { getAllProjects } from "~/resources/projects";
@@ -29,9 +29,11 @@ export default function InteriorDesign() {
         keywords="portofoliu design interior Cluj, amenajari interioare Cluj-Napoca, proiecte design interior"
         path="/interior-design"
       />
-      <Show when={getDataWithPath().length}>
-        <InteriorDesignPortfolio list={getDataWithPath()} />
-      </Show>
+      <Suspense>
+        <Show when={getDataWithPath().length}>
+          <InteriorDesignPortfolio list={getDataWithPath()} />
+        </Show>
+      </Suspense>
     </Page>
   );
 }
