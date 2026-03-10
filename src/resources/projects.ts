@@ -1,21 +1,38 @@
 import { query } from "@solidjs/router";
 import { server } from "./server";
-import { Project } from "~/types";
+import { Project, ContentNode } from "~/types";
 
-export const getLatestProjects = query(async () => {
+export const getFeaturedProjects = query(async () => {
   "use server";
   try {
-    const response = await server.get<{ projects?: Project[] }>(
-      "/projects/latest",
+    const contentRes = await server.get<ContentNode>("/content/tree/latest-projects");
+    const node = contentRes.data;
+    if (!node?.children) return [];
+
+    const ids = node.children
+      .filter((c: ContentNode) => c.key.startsWith("featured-"))
+      .sort((a: ContentNode, b: ContentNode) => (a.order ?? 0) - (b.order ?? 0))
+      .map((c: ContentNode) => c.value)
+      .filter((v): v is string => v !== null && v !== undefined);
+
+    const projects = await Promise.all(
+      ids.map(async (id: string) => {
+        try {
+          const res = await server.get<Project>(`/projects/${id}`);
+          return res.data ?? null;
+        } catch {
+          return null;
+        }
+      }),
     );
 
-    if (response.data?.projects) return response.data.projects as Project[];
+    return projects.filter(Boolean) as Project[];
   } catch (error) {
-    console.error(error);
+    console.error("Failed to fetch featured projects:", error);
   }
 
   return [];
-}, "latestProjects");
+}, "featuredProjects");
 
 export const getAllProjects = query(async () => {
   "use server";
@@ -47,7 +64,6 @@ export const getProjectsById = query(async (id: string) => {
   "use server";
   try {
     const response = await server.get<Project>(`/projects/${id}`);
-    console.log(response.data);
 
     if (response.data)
       return {

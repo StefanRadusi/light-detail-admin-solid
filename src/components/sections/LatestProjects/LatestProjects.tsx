@@ -1,20 +1,40 @@
 import { AnimatedCircle } from "~/components/decorations/AnimatedCircle";
 import { GotToButton } from "~/components/buttons/GoToButton";
-import { Show, createEffect, createSignal } from "solid-js";
+import { Show, createSignal } from "solid-js";
+import { createAsync } from "@solidjs/router";
 import { ProjectCard } from "~/components/lists/ProjectCard";
-import { ProjectCardProps } from "~/components/lists/CardList";
+import { getContentSection } from "~/resources/content";
+import { getFeaturedProjects } from "~/resources/projects";
+import { getText } from "~/utils/content";
+import { Project } from "~/types";
 
-type Props = {
-  projects: ProjectCardProps[];
-};
-
-export const LatestProjects = (props: Props) => {
+export const LatestProjects = () => {
   const [divRef, setDivRef] = createSignal<HTMLDivElement | null>(null);
+  const data = createAsync(() => getFeaturedProjects(), {
+    deferStream: true,
+  });
+  const content = createAsync(() => getContentSection("latest-projects"), {
+    deferStream: true,
+  });
 
-  const getProjectByIndex = (index: number) => props.projects[index] ?? {};
+  const projects = () =>
+    data()?.map((project: Project) => ({
+      ...project,
+      path: `/interior-design/${project.id}`,
+    })) || [];
+
+  const getProjectByIndex = (index: number) => projects()[index] ?? {};
+
+  const heading = () => getText(content(), "heading", "OUR LATEST|PROJECTS");
+  const description = () =>
+    getText(
+      content(),
+      "description",
+      "Lightdetail’s mission is to design and implement functionally-aesthetically balanced spaces tailored to the client’s personality traits."
+    );
 
   return (
-    <Show when={props.projects.length}>
+    <Show when={projects().length}>
       <div class="w-full relative lg:px-60">
         <AnimatedCircle divRef={divRef} />
         <div class="flex flex-1 mx-auto max-w-6xl px-6 lg:pt-20 gap-6 flex-col lg:flex-row">
@@ -25,15 +45,11 @@ export const LatestProjects = (props: Props) => {
                 class="flex flex-col items-end justify-center gap-6 border-r-4 py-4 pr-4 border-black"
               >
                 <h2 class="text-4xl font-bold text-right">
-                  OUR LATEST
-                  <br />
-                  PROJECTS
+                  {heading().split("|").map((part, i) => (
+                    <>{i > 0 && <br />}{part}</>
+                  ))}
                 </h2>
-                <p class="text-right text-gray-500">
-                  Lightdetail’s mission is to design and implement
-                  functionally-aesthetically balanced spaces tailored to the
-                  client's personality traits.
-                </p>
+                <p class="text-right text-gray-500">{description()}</p>
               </div>
             </div>
             <ProjectCard {...getProjectByIndex(0)} />

@@ -6,13 +6,22 @@ import { StaffCard } from "~/components/sections/Staff/StaffCard";
 import { Seo } from "~/components/seo/Seo";
 
 import { getStaff } from "~/resources/staff";
+import { getContentSection } from "~/resources/content";
+import { getText } from "~/utils/content";
 
 export const route = {
-  load: () => getStaff(),
+  load: () => {
+    getStaff();
+    getContentSection("about");
+  },
 };
 
 export default function About() {
   const data = createAsync(() => getStaff(), {
+    deferStream: true,
+  });
+
+  const content = createAsync(() => getContentSection("about"), {
     deferStream: true,
   });
 
@@ -22,9 +31,9 @@ export default function About() {
   return (
     <Page id="about">
       <Seo
-        title="About Us | Light Detail Studio - Interior Design Cluj-Napoca"
-        description="Echipa design interior Cluj — cunoaste echipa Light Detail Studio. Duo de inspiratie si colaborare in design interior Cluj-Napoca."
-        keywords="echipa design interior Cluj, despre noi Light Detail, interior designers Cluj-Napoca"
+        title={getText(content(), "seo-title", "About Us | Light Detail Studio - Interior Design Cluj-Napoca")}
+        description={getText(content(), "seo-description", "Echipa design interior Cluj — cunoaste echipa Light Detail Studio. Duo de inspiratie si colaborare in design interior Cluj-Napoca.")}
+        keywords={getText(content(), "seo-keywords", "echipa design interior Cluj, despre noi Light Detail, interior designers Cluj-Napoca")}
         path="/about"
       />
       <div class="flex relative overflow-hidden lg:px-60">

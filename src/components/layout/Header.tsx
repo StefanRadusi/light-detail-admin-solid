@@ -1,6 +1,9 @@
 import { A } from "@solidjs/router";
+import { useSiteInfo } from "~/context/SiteContent";
 
 export const Header = () => {
+  const siteInfo = useSiteInfo();
+
   return (
     <header class="absolute top-0 left-0 w-full z-10 px-6 lg:px-10 py-5 flex items-center">
       <A href="/">
@@ -11,14 +14,14 @@ export const Header = () => {
         />
       </A>
       <div class="flex gap-5 ml-auto ">
-        <a href="https://www.facebook.com/lightdetailstudio" target="_blank">
+        <a href={siteInfo().facebook} target="_blank">
           <img
             src="/svg/facebook.svg"
             class="h-8 filter invert"
             alt="facebook logo"
           />
         </a>
-        <a href="https://www.instagram.com/lightdetailstudio" target="_blank">
+        <a href={siteInfo().instagram} target="_blank">
           <img
             src="/svg/instagram.svg"
             class="h-8 filter invert"

@@ -25,3 +25,16 @@ export interface StaffMember {
   author: string;
   description: string;
 }
+
+export interface ContentNode {
+  id: number;
+  key: string;
+  value: string | null;
+  type: "text" | "image" | "video" | "section";
+  parentId: number | null;
+  order: number | null;
+  metadata: Record<string, unknown> | null;
+  createdAt: number | null;
+  updatedAt: number | null;
+  children: ContentNode[];
+}

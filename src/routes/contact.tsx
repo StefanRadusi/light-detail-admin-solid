@@ -8,20 +8,31 @@ import { getStaff } from "~/resources/staff";
 import { AnimatedCircle } from "~/components/decorations/AnimatedCircle";
 import { createSignal } from "solid-js";
 import { Seo } from "~/components/seo/Seo";
+import { createAsync } from "@solidjs/router";
+import { getContentSection } from "~/resources/content";
+import { getText } from "~/utils/content";
+import { useSiteInfo } from "~/context/SiteContent";
 
 export const route = {
-  load: () => getStaff(),
+  load: () => {
+    getStaff();
+    getContentSection("contact");
+  },
 };
 
 export default function Contact() {
   const [divRef, setDivRef] = createSignal<HTMLDivElement | null>(null);
+  const siteInfo = useSiteInfo();
+  const content = createAsync(() => getContentSection("contact"), {
+    deferStream: true,
+  });
 
   return (
     <Page id="contact">
       <Seo
-        title="Contact | Light Detail Studio - Interior Design Cluj-Napoca"
-        description="Contacteaza Light Detail Studio — design interior Cluj-Napoca. Programeaza o consultatie pentru amenajari interioare. Memorandumului 10, Cluj-Napoca."
-        keywords="contact design interior Cluj, Light Detail Studio contact, design interior Cluj-Napoca"
+        title={getText(content(), "seo-title", "Contact | Light Detail Studio - Interior Design Cluj-Napoca")}
+        description={getText(content(), "seo-description", "Contacteaza Light Detail Studio — design interior Cluj-Napoca. Programeaza o consultatie pentru amenajari interioare. Memorandumului 10, Cluj-Napoca.")}
+        keywords={getText(content(), "seo-keywords", "contact design interior Cluj, Light Detail Studio contact, design interior Cluj-Napoca")}
         path="/contact"
       />
       <Section
@@ -34,30 +45,30 @@ export default function Contact() {
           class="flex gap-4 flex-col my-14 lg:flex-row lg:items-start lg:gap-6"
         >
           <div class="flex flex-col min-w-[300px]">
-            <h2 class="text-4xl mb-2">LIGHT DETAIL</h2>
+            <h2 class="text-4xl mb-2">{getText(content(), "heading", "LIGHT DETAIL")}</h2>
             <p>
-              <span class="text-gray-500">Mobil:</span>+40740488935 /
-              +40751195354
+              <span class="text-gray-500">Mobil:</span>{siteInfo().phone1} /
+              {" "}{siteInfo().phone2}
             </p>
             <p>
               <span class="text-gray-500">E-mail:</span>{" "}
-              bianca.cimpean@lightdetail.eu / camelia.popa@lightdetail.eu
+              {siteInfo().email1} / {siteInfo().email2}
             </p>
             <p>
-              <span class="text-gray-500">Address:</span> str. Memorandumului 10
+              <span class="text-gray-500">Address:</span> str. {siteInfo().address}
             </p>
             <p>
-              <span class="text-gray-500">City:</span> Cluj-Napoca
+              <span class="text-gray-500">City:</span> {siteInfo().city}
             </p>
             <p>
-              <span class="text-gray-500">Country:</span> Romania
+              <span class="text-gray-500">Country:</span> {siteInfo().country}
             </p>
           </div>
 
           <div class="h-2 border-b-4 lg:border-r-4 border-black lg:self-stretch lg:h-[unset]" />
           <h2 class="text-4xl lg:pt-[200px]">
-            LET`S GET TO KNOW EACH OTHER <br />{" "}
-            <span class="text-brandYellow">SEND US</span> AN EMAIL
+            {getText(content(), "cta-heading", "LET`S GET TO KNOW EACH OTHER")} <br />{" "}
+            <span class="text-brandYellow">{getText(content(), "cta-subheading", "SEND US AN EMAIL")}</span>
           </h2>
         </div>
         <ContactForm />

@@ -11,6 +11,7 @@ import "./app.css";
 import { useIsMobile } from "./utils/viewport";
 import { MobileMenu } from "./components/navigation/MobileMenu";
 import { ImgPreview } from "./components/img-preview";
+import { SiteContentProvider } from "./context/SiteContent";
 
 export default function App() {
   const isMobile = useIsMobile();
@@ -19,22 +20,25 @@ export default function App() {
     <Router
       root={(props) => (
         <MetaProvider>
-          <Header />
-          <Suspense
-            fallback={<section class="w-screen h-screen page-banner" />}
-          >
-            {props.children}
-          </Suspense>
-          <div class="relative">
-            <Show when={!isMobile()} fallback={<MobileMenu />}>
-              <DesktopMenu />
-            </Show>
+          <SiteContentProvider>
+            <Header />
+            <Suspense
+              fallback={<section class="w-screen h-screen page-banner" />}
+            >
+              {props.children}
+            </Suspense>
+            <div class="relative">
+              <Show when={!isMobile()} fallback={<MobileMenu />}>
+                <DesktopMenu />
+              </Show>
 
-            <Footer />
-          </div>
-          <ImgPreview />
+              <Footer />
+            </div>
+            <ImgPreview />
+          </SiteContentProvider>
         </MetaProvider>
       )}
+      preload
     >
       <FileRoutes />
     </Router>

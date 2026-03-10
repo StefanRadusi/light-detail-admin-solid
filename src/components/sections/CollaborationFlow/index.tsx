@@ -1,14 +1,34 @@
-import { For, Show, createSignal, onMount, createEffect } from "solid-js";
+import { For, Show, createSignal, onMount } from "solid-js";
+import { createAsync } from "@solidjs/router";
 import { StepCard, StepCardTextPosition } from "./StepCard";
-import { flowSteps } from "./flowSteps";
+import { flowSteps as defaultFlowSteps } from "./flowSteps";
 import { FlowConnector } from "./flow-connector-svg";
 import clsx from "clsx";
+import { getContentSection } from "~/resources/content";
+import { getText } from "~/utils/content";
 
 export const CollaborationFlow = () => {
   const [visibleElements, setVisibleElements] = createSignal<
     Record<number, boolean>
   >({});
   let containerRef: HTMLDivElement | undefined;
+
+  const content = createAsync(() => getContentSection("collaboration-flow"), {
+    deferStream: true,
+  });
+
+  const steps = () => {
+    const node = content();
+    if (!node?.children?.length) return defaultFlowSteps;
+    return node.children
+      .filter((c) => c.type === "section")
+      .map((step, i) => ({
+        title: getText(step, "title", defaultFlowSteps[i]?.title ?? ""),
+        subTitle: getText(step, "subtitle", defaultFlowSteps[i]?.subTitle ?? ""),
+        description: getText(step, "description", defaultFlowSteps[i]?.description ?? ""),
+        img: (step.metadata?.img as string) ?? defaultFlowSteps[i]?.img ?? "",
+      }));
+  };
 
   onMount(() => {
     if (!containerRef) return;
@@ -42,10 +62,10 @@ export const CollaborationFlow = () => {
         ref={containerRef}
         class="flex flex-col px-6 mx-auto flex-1 max-w-6xl overflow-hidden pb-24"
       >
-        <For each={flowSteps}>
+        <For each={steps()}>
           {(step, index) => {
-            const stepElementIndex = index() * 2; // Even numbers for steps
-            const connectorElementIndex = index() * 2 + 1; // Odd numbers for connectors
+            const stepElementIndex = index() * 2;
+            const connectorElementIndex = index() * 2 + 1;
 
             return (
               <>
@@ -68,7 +88,7 @@ export const CollaborationFlow = () => {
                     }
                   />
                 </div>
-                <Show when={index() < flowSteps.length - 1}>
+                <Show when={index() < steps().length - 1}>
                   <div
                     class={clsx(
                       "relative transition-opacity duration-500 ease-out delay-300",

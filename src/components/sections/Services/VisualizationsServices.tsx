@@ -1,10 +1,16 @@
 import clsx from "clsx";
 import { createSignal, onMount, onCleanup } from "solid-js";
+import { createAsync } from "@solidjs/router";
 import { GotToButton } from "~/components/buttons/GoToButton";
+import { getContentSection } from "~/resources/content";
+import { getText, getImage } from "~/utils/content";
 
 export const VisualizationsServices = () => {
   const [flip, setFlip] = createSignal(true);
   let sectionRef!: HTMLDivElement;
+  const content = createAsync(() => getContentSection("visualizations"), {
+    deferStream: true,
+  });
 
   onMount(() => {
     if (!sectionRef) return;
@@ -48,7 +54,7 @@ export const VisualizationsServices = () => {
         >
           <img
             class="w-full h-full object-cover"
-            src="/img/visualisation1.jpg"
+            src={getImage(content(), "image-1")?.src ?? "/img/visualisation1.jpg"}
           />
         </div>
         <div
@@ -59,7 +65,7 @@ export const VisualizationsServices = () => {
         >
           <img
             class="w-full h-full object-cover"
-            src="/img/visualisation2.jpg"
+            src={getImage(content(), "image-2")?.src ?? "/img/visualisation2.jpg"}
           />
         </div>
       </div>
@@ -68,18 +74,9 @@ export const VisualizationsServices = () => {
           ref={sectionRef}
           class="flex flex-col w-full bg-gray-100 p-6 gap-4 shadow-md mb-4 rounded-md max-w-[500px]"
         >
-          <h3 class="text-4xl">VISUALIZATIONS</h3>
-          <p>
-            We create CG ART visualizations for residential and commercial
-            interiors. 3D renderings are a photorealistic way of understanding
-            an architectural plan, a construction drawing or something that does
-            not exist yet, an idea or a concept.
-          </p>
-          <p>
-            Therefore, if you are looking to outsource a CG ART visualization
-            for a client presentation or marketing purposes we are the team to
-            partner with.
-          </p>
+          <h3 class="text-4xl">{getText(content(), "heading", "VISUALIZATIONS")}</h3>
+          <p>{getText(content(), "description-1", "We create CG ART visualizations for residential and commercial interiors. 3D renderings are a photorealistic way of understanding an architectural plan, a construction drawing or something that does not exist yet, an idea or a concept.")}</p>
+          <p>{getText(content(), "description-2", "Therefore, if you are looking to outsource a CG ART visualization for a client presentation or marketing purposes we are the team to partner with.")}</p>
           <div class="pl-[35px]">
             <GotToButton to="/contact" label="CONTACT US" selected />
           </div>
