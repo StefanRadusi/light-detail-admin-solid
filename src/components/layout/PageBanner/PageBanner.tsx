@@ -1,6 +1,7 @@
 import clsx from "clsx";
 import "./PageBanner.css";
 import { Show, onMount, createSignal, onCleanup, createEffect } from "solid-js";
+import { getImageUrl, getVideoUrl } from "~/utils/image";
 
 type Props = {
   id: string;
@@ -87,13 +88,13 @@ export const PageBanner = (props: Props) => {
       id={props.id}
       class={clsx(
         "w-full overflow-hidden relative page-banner",
-        !props.vid && "h-screen"
+        !props.vid && "h-screen",
       )}
     >
       <div
         class={clsx(
           "w-full relative",
-          !props.vid && "h-full absolute top-0 left-0"
+          !props.vid && "h-full absolute top-0 left-0",
         )}
       >
         <Show
@@ -101,10 +102,13 @@ export const PageBanner = (props: Props) => {
           fallback={
             <picture>
               <Show when={props.imgMobile}>
-                <source media="(max-width: 768px)" srcset={props.imgMobile} />
+                <source
+                  media="(max-width: 768px)"
+                  srcset={props.imgMobile && getImageUrl(props.imgMobile)}
+                />
               </Show>
               <img
-                src={props.img}
+                src={getImageUrl(props.img)}
                 alt={`${props.title.replace("|", " ")} - Light Detail Studio`}
                 class="w-full h-full object-cover"
               />
@@ -122,9 +126,12 @@ export const PageBanner = (props: Props) => {
               class="w-full h-full object-cover absolute top-0 left-0"
             >
               <Show when={props.vidMobile}>
-                <source media="(max-width: 768px)" src={props.vidMobile} />
+                <source
+                  media="(max-width: 768px)"
+                  src={props.vidMobile && getVideoUrl(props.vidMobile)}
+                />
               </Show>
-              <source src={props.vid} />
+              <source src={props.vid && getVideoUrl(props.vid)} />
             </video>
           </div>
         </Show>
@@ -140,7 +147,7 @@ export const PageBanner = (props: Props) => {
               <h1
                 class={clsx(
                   "uppercase text-center text-yellow-500 lg:text-8xl font-semibold text-shadow moveBannerTextTop",
-                  getTextSize(splitTitle()[0])
+                  getTextSize(splitTitle()[0]),
                 )}
               >
                 {splitTitle()[0]}
@@ -151,7 +158,7 @@ export const PageBanner = (props: Props) => {
               <h1
                 class={clsx(
                   "uppercase text-center text-white lg:text-8xl font-semibold text-shadow z-10 relative moveBannerTextBottom",
-                  getTextSize(splitTitle()[1])
+                  getTextSize(splitTitle()[1]),
                 )}
               >
                 {splitTitle()[1]}
