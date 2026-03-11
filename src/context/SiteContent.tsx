@@ -18,21 +18,21 @@ type SiteInfo = {
   instagram: string;
 };
 
-const defaults: SiteInfo = {
-  companyName: "Light Detail Studio",
-  phone1: "+40740488935",
-  phone2: "+40751195354",
-  email1: "bianca.cimpean@lightdetail.eu",
-  email2: "camelia.popa@lightdetail.eu",
-  address: "Memorandumului 10",
-  city: "Cluj-Napoca",
-  country: "Romania",
-  website: "https://lightdetail.eu",
-  facebook: "https://www.facebook.com/lightdetailstudio",
-  instagram: "https://www.instagram.com/lightdetailstudio",
+const empty: SiteInfo = {
+  companyName: "",
+  phone1: "",
+  phone2: "",
+  email1: "",
+  email2: "",
+  address: "",
+  city: "",
+  country: "",
+  website: "",
+  facebook: "",
+  instagram: "",
 };
 
-const SiteContentContext = createContext<() => SiteInfo>(() => defaults);
+const SiteContentContext = createContext<() => SiteInfo>(() => empty);
 
 export function SiteContentProvider(props: { children: JSXElement }) {
   const data = createAsync(() => getContentSection("site-info"), {
@@ -41,20 +41,20 @@ export function SiteContentProvider(props: { children: JSXElement }) {
 
   const siteInfo = createMemo((): SiteInfo => {
     const node = data();
-    if (!node) return defaults;
+    if (!node) return empty;
 
     return {
-      companyName: getText(node, "company-name", defaults.companyName),
-      phone1: getText(node, "phone-1", defaults.phone1),
-      phone2: getText(node, "phone-2", defaults.phone2),
-      email1: getText(node, "email-1", defaults.email1),
-      email2: getText(node, "email-2", defaults.email2),
-      address: getText(node, "address", defaults.address),
-      city: getText(node, "city", defaults.city),
-      country: getText(node, "country", defaults.country),
-      website: getText(node, "website", defaults.website),
-      facebook: getText(node, "facebook", defaults.facebook),
-      instagram: getText(node, "instagram", defaults.instagram),
+      companyName: getText(node, "company-name"),
+      phone1: getText(node, "phone-1"),
+      phone2: getText(node, "phone-2"),
+      email1: getText(node, "email-1"),
+      email2: getText(node, "email-2"),
+      address: getText(node, "address"),
+      city: getText(node, "city"),
+      country: getText(node, "country"),
+      website: getText(node, "website"),
+      facebook: getText(node, "facebook"),
+      instagram: getText(node, "instagram"),
     };
   });
 

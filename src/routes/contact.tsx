@@ -30,9 +30,9 @@ export default function Contact() {
   return (
     <Page id="contact">
       <Seo
-        title={getText(content(), "seo-title", "Contact | Light Detail Studio - Interior Design Cluj-Napoca")}
-        description={getText(content(), "seo-description", "Contacteaza Light Detail Studio — design interior Cluj-Napoca. Programeaza o consultatie pentru amenajari interioare. Memorandumului 10, Cluj-Napoca.")}
-        keywords={getText(content(), "seo-keywords", "contact design interior Cluj, Light Detail Studio contact, design interior Cluj-Napoca")}
+        title={getText(content(), "seo-title")}
+        description={getText(content(), "seo-description")}
+        keywords={getText(content(), "seo-keywords")}
         path="/contact"
       />
       <Section
@@ -45,7 +45,7 @@ export default function Contact() {
           class="flex gap-4 flex-col my-14 lg:flex-row lg:items-start lg:gap-6"
         >
           <div class="flex flex-col min-w-[300px]">
-            <h2 class="text-4xl mb-2">{getText(content(), "heading", "LIGHT DETAIL")}</h2>
+            <h2 class="text-4xl mb-2">{getText(content(), "heading")}</h2>
             <p>
               <span class="text-gray-500">Mobil:</span>{siteInfo().phone1} /
               {" "}{siteInfo().phone2}
@@ -67,8 +67,8 @@ export default function Contact() {
 
           <div class="h-2 border-b-4 lg:border-r-4 border-black lg:self-stretch lg:h-[unset]" />
           <h2 class="text-4xl lg:pt-[200px]">
-            {getText(content(), "cta-heading", "LET`S GET TO KNOW EACH OTHER")} <br />{" "}
-            <span class="text-brandYellow">{getText(content(), "cta-subheading", "SEND US AN EMAIL")}</span>
+            {getText(content(), "cta-heading")} <br />{" "}
+            <span class="text-brandYellow">{getText(content(), "cta-subheading")}</span>
           </h2>
         </div>
         <ContactForm />

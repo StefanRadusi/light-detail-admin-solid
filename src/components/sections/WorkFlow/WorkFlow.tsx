@@ -5,12 +5,6 @@ import { AnimatedCircle } from "~/components/decorations/AnimatedCircle";
 import { getContentSection } from "~/resources/content";
 import { getText } from "~/utils/content";
 
-const defaultSteps = [
-  { img: "/img/space.jpg", title: "Space planning", subTitle: "Shape forming." },
-  { img: "/img/concept.jpg", title: "Concept development", subTitle: "Determining the best interior style for you. Developing the design concept." },
-  { img: "/img/product.jpg", title: "Product selection & buying", subTitle: "Selection of the appropriate items and products required." },
-  { img: "/img/project.jpg", title: "Project implementation", subTitle: "Managing every stage of the interior design process." },
-];
 
 export const WorkFlow = () => {
   const [divRef, setDivRef] = createSignal<HTMLDivElement | null>(null);
@@ -20,23 +14,18 @@ export const WorkFlow = () => {
 
   const steps = () => {
     const node = content();
-    if (!node?.children?.length) return defaultSteps;
+    if (!node?.children?.length) return [];
     return node.children
       .filter((c) => c.type === "section")
-      .map((step, i) => ({
-        img: (step.metadata?.img as string) ?? defaultSteps[i]?.img ?? "",
-        title: getText(step, "title", defaultSteps[i]?.title ?? ""),
-        subTitle: getText(step, "subtitle", defaultSteps[i]?.subTitle ?? ""),
+      .map((step) => ({
+        img: (step.metadata?.img as string) ?? "",
+        title: getText(step, "title"),
+        subTitle: getText(step, "subtitle"),
       }));
   };
 
-  const heading = () => getText(content(), "heading", "HOW DO WE WORK");
-  const description = () =>
-    getText(
-      content(),
-      "description",
-      "A strategic playground of shapes and colors chosen with care for the environment and economical sustainability, working together with local providers as much as possible. Designed homes that mirrors and shelters each and every lifestyle."
-    );
+  const heading = () => getText(content(), "heading");
+  const description = () => getText(content(), "description");
 
   return (
     <div class="flex w-full mt-20 lg:mt-32 relative overflow-hidden pb-12 lg:px-60">

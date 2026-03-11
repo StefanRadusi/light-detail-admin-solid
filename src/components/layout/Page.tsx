@@ -63,8 +63,8 @@ export const Page = (props: Props) => {
       <PageBanner
         id={props.id}
         img={bannerImg()}
-        title={getText(pageContent(), "banner-title", route().title)}
-        subTitle={getText(pageContent(), "banner-subtitle", route().subTitle)}
+        title={getText(pageContent(), "banner-title")}
+        subTitle={getText(pageContent(), "banner-subtitle")}
         imgMobile={bannerImgMobile()}
         vid={bannerVid()}
         vidMobile={bannerVidMobile()}

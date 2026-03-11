@@ -74,9 +74,9 @@ export const VisualizationsServices = () => {
           ref={sectionRef}
           class="flex flex-col w-full bg-gray-100 p-6 gap-4 shadow-md mb-4 rounded-md max-w-[500px]"
         >
-          <h3 class="text-4xl">{getText(content(), "heading", "VISUALIZATIONS")}</h3>
-          <p>{getText(content(), "description-1", "We create CG ART visualizations for residential and commercial interiors. 3D renderings are a photorealistic way of understanding an architectural plan, a construction drawing or something that does not exist yet, an idea or a concept.")}</p>
-          <p>{getText(content(), "description-2", "Therefore, if you are looking to outsource a CG ART visualization for a client presentation or marketing purposes we are the team to partner with.")}</p>
+          <h3 class="text-4xl">{getText(content(), "heading")}</h3>
+          <p>{getText(content(), "description-1")}</p>
+          <p>{getText(content(), "description-2")}</p>
           <div class="pl-[35px]">
             <GotToButton to="/contact" label="CONTACT US" selected />
           </div>

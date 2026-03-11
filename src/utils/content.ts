@@ -10,15 +10,15 @@ export function findChild(
 export function getText(
   node: ContentNode | null | undefined,
   key: string,
-  fallback = "",
+  fallback?: string,
   optional = false
 ): string {
   const value = findChild(node, key)?.value;
   if (value === undefined || value === null) {
     if (node && !optional) {
-      console.warn(`[Content] Key "${key}" not found in section "${node.key}", using fallback`);
+      console.warn(`[Content] Key "${key}" not found in section "${node.key}"`);
     }
-    return fallback;
+    return fallback ?? `[MISSING: ${key}]`;
   }
   return value;
 }

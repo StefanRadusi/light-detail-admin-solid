@@ -1,7 +1,7 @@
 import { For, Show, createSignal, onMount } from "solid-js";
 import { createAsync } from "@solidjs/router";
 import { StepCard, StepCardTextPosition } from "./StepCard";
-import { flowSteps as defaultFlowSteps } from "./flowSteps";
+
 import { FlowConnector } from "./flow-connector-svg";
 import clsx from "clsx";
 import { getContentSection } from "~/resources/content";
@@ -19,14 +19,14 @@ export const CollaborationFlow = () => {
 
   const steps = () => {
     const node = content();
-    if (!node?.children?.length) return defaultFlowSteps;
+    if (!node?.children?.length) return [];
     return node.children
       .filter((c) => c.type === "section")
-      .map((step, i) => ({
-        title: getText(step, "title", defaultFlowSteps[i]?.title ?? ""),
-        subTitle: getText(step, "subtitle", defaultFlowSteps[i]?.subTitle ?? ""),
-        description: getText(step, "description", defaultFlowSteps[i]?.description ?? ""),
-        img: (step.metadata?.img as string) ?? defaultFlowSteps[i]?.img ?? "",
+      .map((step) => ({
+        title: getText(step, "title"),
+        subTitle: getText(step, "subtitle"),
+        description: getText(step, "description"),
+        img: (step.metadata?.img as string) ?? "",
       }));
   };
 

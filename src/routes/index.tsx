@@ -24,9 +24,9 @@ export default function Home() {
   return (
     <Page id="home">
       <Seo
-        title={getText(content(), "seo-title", "Light Detail Studio | Interior Design Cluj-Napoca")}
-        description={getText(content(), "seo-description", "Light Detail Studio — design interior Cluj-Napoca. Amenajari interioare Cluj, randari 3D si vizualizari arhitecturale. Transformam spatii cu design functional si estetic.")}
-        keywords={getText(content(), "seo-keywords", "design interior Cluj, amenajari interioare Cluj-Napoca, interior design Cluj-Napoca, randari 3D, Light Detail Studio")}
+        title={getText(content(), "seo-title")}
+        description={getText(content(), "seo-description")}
+        keywords={getText(content(), "seo-keywords")}
         path="/"
       />
       <JsonLd

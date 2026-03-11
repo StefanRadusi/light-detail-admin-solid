@@ -31,9 +31,9 @@ export default function About() {
   return (
     <Page id="about">
       <Seo
-        title={getText(content(), "seo-title", "About Us | Light Detail Studio - Interior Design Cluj-Napoca")}
-        description={getText(content(), "seo-description", "Echipa design interior Cluj — cunoaste echipa Light Detail Studio. Duo de inspiratie si colaborare in design interior Cluj-Napoca.")}
-        keywords={getText(content(), "seo-keywords", "echipa design interior Cluj, despre noi Light Detail, interior designers Cluj-Napoca")}
+        title={getText(content(), "seo-title")}
+        description={getText(content(), "seo-description")}
+        keywords={getText(content(), "seo-keywords")}
         path="/about"
       />
       <div class="flex relative overflow-hidden lg:px-60">

@@ -25,13 +25,8 @@ export const LatestProjects = () => {
 
   const getProjectByIndex = (index: number) => projects()[index] ?? {};
 
-  const heading = () => getText(content(), "heading", "OUR LATEST|PROJECTS");
-  const description = () =>
-    getText(
-      content(),
-      "description",
-      "Lightdetail’s mission is to design and implement functionally-aesthetically balanced spaces tailored to the client’s personality traits."
-    );
+  const heading = () => getText(content(), "heading");
+  const description = () => getText(content(), "description");
 
   return (
     <Show when={projects().length}>

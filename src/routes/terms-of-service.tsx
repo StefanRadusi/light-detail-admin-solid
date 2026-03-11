@@ -20,8 +20,8 @@ export default function TermOfService() {
   return (
     <Page id="termsOfService">
       <Seo
-        title={getText(content(), "seo-title", "Terms of Service | Light Detail Studio")}
-        description={getText(content(), "seo-description", "Terms of Service for Light Detail Studio. Read the terms governing the use of our interior design services.")}
+        title={getText(content(), "seo-title")}
+        description={getText(content(), "seo-description")}
         path="/terms-of-service"
       />
       <div class="flex relative overflow-hidden lg:px-60">

@@ -20,8 +20,8 @@ export default function PrivacyPolicy() {
   return (
     <Page id="privacyPolicy">
       <Seo
-        title={getText(content(), "seo-title", "Privacy Policy | Light Detail Studio")}
-        description={getText(content(), "seo-description", "Privacy Policy for Light Detail Studio. Learn how we collect, use, and protect your personal information.")}
+        title={getText(content(), "seo-title")}
+        description={getText(content(), "seo-description")}
         path="/privacy-policy"
       />
       <div class="flex relative overflow-hidden lg:px-60">

@@ -4,7 +4,6 @@ import { SectionHeader } from "~/components/layout/Section/SectionHeader";
 import { AnimatedCircle } from "~/components/decorations/AnimatedCircle";
 import { For, createSignal } from "solid-js";
 import { ProposalCard } from "~/components/sections/Services/ProposalCard";
-import { proposals as defaultProposals } from "~/components/sections/Services/proposals";
 import { VisualizationsServices } from "~/components/sections/Services/VisualizationsServices";
 import { CollaborationFlow } from "~/components/sections/CollaborationFlow";
 import { Seo } from "~/components/seo/Seo";
@@ -25,20 +24,20 @@ export const route = {
 };
 
 function proposalsFromContent(node: ContentNode | null | undefined) {
-  if (!node?.children?.length) return defaultProposals;
+  if (!node?.children?.length) return [];
   return node.children.map((pkg, i) => {
     const servicesSection = findChild(pkg, "services");
     return {
       id: i + 1,
-      title: getText(pkg, "title", defaultProposals[i]?.title ?? ""),
-      img: (pkg.metadata?.img as string) ?? defaultProposals[i]?.img ?? "",
-      subTitle: getText(pkg, "subtitle", defaultProposals[i]?.subTitle ?? ""),
-      description: getText(pkg, "description", defaultProposals[i]?.description ?? ""),
-      descriptionFooter: getText(pkg, "description-footer", "", true) || undefined,
+      title: getText(pkg, "title"),
+      img: (pkg.metadata?.img as string) ?? "",
+      subTitle: getText(pkg, "subtitle"),
+      description: getText(pkg, "description"),
+      descriptionFooter: getText(pkg, "description-footer", undefined, true) || undefined,
       services: servicesSection?.children?.map((s) => ({
         type: (s.metadata?.serviceType as string) ?? "basic",
         text: s.value ?? "",
-      })) ?? defaultProposals[i]?.services ?? [],
+      })) ?? [],
       isBestValue: (pkg.metadata?.isBestValue as boolean) ?? false,
     };
   });
@@ -59,9 +58,9 @@ export default function Services() {
   return (
     <Page id="services">
       <Seo
-        title={getText(content(), "seo-title", "Interior Design Services Cluj-Napoca | Light Detail Studio")}
-        description={getText(content(), "seo-description", "Servicii design interior Cluj-Napoca — pachete personalizate de amenajari interioare, randari 3D si management de proiect. Light Detail Studio.")}
-        keywords={getText(content(), "seo-keywords", "servicii design interior Cluj-Napoca, randari 3D, amenajari interioare Cluj, pachete design interior")}
+        title={getText(content(), "seo-title")}
+        description={getText(content(), "seo-description")}
+        keywords={getText(content(), "seo-keywords")}
         path="/services"
       />
       <JsonLd
@@ -78,7 +77,7 @@ export default function Services() {
             "@type": "City",
             name: siteInfo().city,
           },
-          description: getText(content(), "jsonld-description", "Interior design services including tailored design packages, 3D visualizations, and project management in Cluj-Napoca, Romania."),
+          description: getText(content(), "jsonld-description"),
         }}
       />
       <Section
@@ -93,8 +92,8 @@ export default function Services() {
         }
       >
         <SectionHeader
-          title={getText(content(), "section-title", "Discover the right pack for you")}
-          subTitle={getText(content(), "section-subtitle", "We offer 3 tailored service packages designed to meet a variety of needs, lifestyles, and budgets. Whether you’re looking for a solid design foundation, personalized guidance during implementation, or a fully managed, stress-free transformation, we’ve got you covered. Explore our offerings below to find the perfect fit for your project.")}
+          title={getText(content(), "section-title")}
+          subTitle={getText(content(), "section-subtitle")}
         />
         <div class="flex gap-6 pb-4 overflow-x-auto no-scrollbar">
           <For each={proposals()}>
