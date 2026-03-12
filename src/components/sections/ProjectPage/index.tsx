@@ -17,7 +17,7 @@ export const ProjectPage = (props: Props) => {
     <main class="w-full flex flex-col relative">
       <PageBanner
         id={props.project.id}
-        img={getImageUrl(props.project.coverImageUrl)}
+        img={props.project.coverImageUrl}
         title={getBannerTitle()}
         subTitle={""}
       />
