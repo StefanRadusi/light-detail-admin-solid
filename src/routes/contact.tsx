@@ -10,7 +10,7 @@ import { createSignal } from "solid-js";
 import { Seo } from "~/components/seo/Seo";
 import { createAsync } from "@solidjs/router";
 import { getContentSection } from "~/resources/content";
-import { getText } from "~/utils/content";
+import { getText, getImage } from "~/utils/content";
 import { useSiteInfo } from "~/context/SiteContent";
 
 export const route = {
@@ -34,6 +34,7 @@ export default function Contact() {
         description={getText(content(), "seo-description")}
         keywords={getText(content(), "seo-keywords")}
         path="/contact"
+        ogImage={getImage(content(), "og-image")?.src}
       />
       <Section
         decorations={

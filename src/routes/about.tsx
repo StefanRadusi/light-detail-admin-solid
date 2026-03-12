@@ -7,7 +7,7 @@ import { Seo } from "~/components/seo/Seo";
 
 import { getStaff } from "~/resources/staff";
 import { getContentSection } from "~/resources/content";
-import { getText } from "~/utils/content";
+import { getText, getImage } from "~/utils/content";
 
 export const route = {
   load: () => {
@@ -35,6 +35,7 @@ export default function About() {
         description={getText(content(), "seo-description")}
         keywords={getText(content(), "seo-keywords")}
         path="/about"
+        ogImage={getImage(content(), "og-image")?.src}
       />
       <div class="flex relative overflow-hidden lg:px-60">
         <AnimatedCircle divRef={divRef1} options={{ threshold: 0.3 }} />

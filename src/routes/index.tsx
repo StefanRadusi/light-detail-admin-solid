@@ -5,7 +5,7 @@ import { Page } from "~/components/layout/Page";
 import { Seo } from "~/components/seo/Seo";
 import { JsonLd } from "~/components/seo/JsonLd";
 import { getContentSection } from "~/resources/content";
-import { getText } from "~/utils/content";
+import { getText, getImage } from "~/utils/content";
 import { useSiteInfo } from "~/context/SiteContent";
 
 export const route = {
@@ -28,6 +28,7 @@ export default function Home() {
         description={getText(content(), "seo-description")}
         keywords={getText(content(), "seo-keywords")}
         path="/"
+        ogImage={getImage(content(), "og-image")?.src}
       />
       <JsonLd
         data={{

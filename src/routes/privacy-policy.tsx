@@ -4,7 +4,7 @@ import { AnimatedCircle } from "~/components/decorations/AnimatedCircle";
 import { Page } from "~/components/layout/Page";
 import { Seo } from "~/components/seo/Seo";
 import { getContentSection } from "~/resources/content";
-import { getText } from "~/utils/content";
+import { getText, getImage } from "~/utils/content";
 import { LegalContent } from "~/components/sections/Legal/LegalContent";
 
 export const route = {
@@ -23,6 +23,7 @@ export default function PrivacyPolicy() {
         title={getText(content(), "seo-title")}
         description={getText(content(), "seo-description")}
         path="/privacy-policy"
+        ogImage={getImage(content(), "og-image")?.src}
       />
       <div class="flex relative overflow-hidden lg:px-60">
         <AnimatedCircle divRef={divRef1} options={{ threshold: 0.3 }} />

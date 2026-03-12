@@ -10,7 +10,7 @@ import { Seo } from "~/components/seo/Seo";
 import { JsonLd } from "~/components/seo/JsonLd";
 import { createAsync } from "@solidjs/router";
 import { getContentSection } from "~/resources/content";
-import { getText, findChild } from "~/utils/content";
+import { getText, findChild, getImage } from "~/utils/content";
 import { useSiteInfo } from "~/context/SiteContent";
 import { ContentNode } from "~/types";
 
@@ -62,6 +62,7 @@ export default function Services() {
         description={getText(content(), "seo-description")}
         keywords={getText(content(), "seo-keywords")}
         path="/services"
+        ogImage={getImage(content(), "og-image")?.src}
       />
       <JsonLd
         data={{
