@@ -21,19 +21,17 @@ export default function App() {
       root={(props) => (
         <MetaProvider>
           <SiteContentProvider>
-            <Header />
-            <Suspense
-              fallback={<section class="w-screen h-screen page-banner" />}
-            >
+            <Suspense>
+              <Header />
               {props.children}
-            </Suspense>
-            <div class="relative">
-              <Show when={!isMobile()} fallback={<MobileMenu />}>
-                <DesktopMenu />
-              </Show>
+              <div class="relative">
+                <Show when={!isMobile()} fallback={<MobileMenu />}>
+                  <DesktopMenu />
+                </Show>
 
-              <Footer />
-            </div>
+                <Footer />
+              </div>
+            </Suspense>
             <ImgPreview />
           </SiteContentProvider>
         </MetaProvider>
