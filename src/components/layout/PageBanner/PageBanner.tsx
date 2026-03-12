@@ -4,21 +4,21 @@ import { Show, onMount, createSignal, onCleanup, createEffect } from "solid-js";
 import { getImageUrl, getVideoUrl } from "~/utils/image";
 
 type Props = {
-  id: string;
-  img: string;
+  id?: string;
+  img?: string;
   imgMobile?: string;
   vid?: string;
   vidMobile?: string;
-  title: string;
+  title?: string;
   subTitle?: string;
 };
 
 export const PageBanner = (props: Props) => {
-  const splitTitle = () => props.title.split("|");
+  const splitTitle = () => props.title?.split("|");
   const [videoRef, setVideoRef] = createSignal<HTMLVideoElement>();
 
-  const getTextSize = (text: string) => {
-    if (text.length > 8) {
+  const getTextSize = (text?: string) => {
+    if ((text?.length ?? 0) > 8) {
       return "text-4xl";
     }
 
@@ -108,8 +108,8 @@ export const PageBanner = (props: Props) => {
                 />
               </Show>
               <img
-                src={getImageUrl(props.img)}
-                alt={`${props.title.replace("|", " ")} - Light Detail Studio`}
+                src={props.img && getImageUrl(props.img)}
+                alt={`${props.title?.replace("|", " ")} - Light Detail Studio`}
                 class="w-full h-full object-cover"
               />
             </picture>
@@ -147,10 +147,10 @@ export const PageBanner = (props: Props) => {
               <h1
                 class={clsx(
                   "uppercase text-center text-yellow-500 lg:text-8xl font-semibold text-shadow moveBannerTextTop",
-                  getTextSize(splitTitle()[0]),
+                  getTextSize(splitTitle()?.[0]),
                 )}
               >
-                {splitTitle()[0]}
+                {splitTitle()?.[0]}
               </h1>
             </div>
             <div class="bg-white w-full h-[4px] rounded-md scaleDivider" />
@@ -158,10 +158,10 @@ export const PageBanner = (props: Props) => {
               <h1
                 class={clsx(
                   "uppercase text-center text-white lg:text-8xl font-semibold text-shadow z-10 relative moveBannerTextBottom",
-                  getTextSize(splitTitle()[1]),
+                  getTextSize(splitTitle()?.[1]),
                 )}
               >
-                {splitTitle()[1]}
+                {splitTitle()?.[1]}
               </h1>
             </div>
           </div>
