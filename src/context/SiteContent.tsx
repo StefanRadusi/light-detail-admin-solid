@@ -1,7 +1,6 @@
 import { createContext, createMemo, useContext, JSXElement } from "solid-js";
 import { createAsync } from "@solidjs/router";
 import { getContentSection } from "~/resources/content";
-import { ContentNode } from "~/types";
 import { getText } from "~/utils/content";
 
 type SiteInfo = {

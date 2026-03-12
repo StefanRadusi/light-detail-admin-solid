@@ -20,8 +20,8 @@ export default function App() {
     <Router
       root={(props) => (
         <MetaProvider>
-          <SiteContentProvider>
-            <Suspense>
+          <Suspense>
+            <SiteContentProvider>
               <Header />
               {props.children}
               <div class="relative">
@@ -31,9 +31,9 @@ export default function App() {
 
                 <Footer />
               </div>
-            </Suspense>
-            <ImgPreview />
-          </SiteContentProvider>
+              <ImgPreview />
+            </SiteContentProvider>
+          </Suspense>
         </MetaProvider>
       )}
       preload
