@@ -20,6 +20,8 @@ ENV NODE_ENV=production
 ENV HOST=0.0.0.0
 ENV PORT=3000
 
+RUN apk add --no-cache curl
+
 RUN addgroup --system --gid 1001 solidjs
 RUN adduser --system --uid 1001 solidjs
 
